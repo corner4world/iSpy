@@ -176,7 +176,7 @@ namespace iSpyApplication.Controls
         {
             if (mode < 0)
                 mode = 0;
-            if (!VlcHelper.VlcInstalled && mode == Enums.PlaybackMode.iSpy)
+            if (!VlcHelper.VLCAvailable && mode == Enums.PlaybackMode.iSpy)
             {
                 MessageBox.Show(this,
                     Program.Platform == "x64"
@@ -210,7 +210,7 @@ namespace iSpyApplication.Controls
             switch (mode)
             {
                 case Enums.PlaybackMode.Website:
-                    string url = MainForm.Webserver + "/MediaViewer.aspx?oid=" + Oid + "&ot="+ Otid + "&fn=" + fn + "&port=" + MainForm.Conf.ServerPort;
+                    string url = MainForm.Webserver.Replace("https://","http://") + "/MediaViewer.aspx?oid=" + Oid + "&ot="+ Otid + "&fn=" + fn + "&port=" + MainForm.Conf.ServerPort;
                     if (WsWrapper.WebsiteLive && MainForm.Conf.ServicesEnabled)
                     {
                         MainForm.OpenUrl(url);

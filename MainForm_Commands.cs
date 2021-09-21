@@ -21,7 +21,20 @@ namespace iSpyApplication
             if (_shuttingDown)
                 return;
             _tmrJoystick.Stop();
-            Invoke(new Delegates.RunCheckJoystick(CheckJoystick));
+
+            try
+            {
+                Invoke(new Delegates.RunCheckJoystick(CheckJoystick));
+            }
+            catch(InvalidOperationException)
+            {
+                //ignore - window not available
+            }
+            catch(Exception ex)
+            {
+                Logger.LogException(ex, "Check Joystick");
+            }
+            
             _tmrJoystick.Start();
         }
 

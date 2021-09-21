@@ -574,6 +574,7 @@ namespace iSpyApplication
             label42.Text = "ms";
             label49.Text = "ms";
             label62.Text = "s";
+            label69.Text = VlcHelper.VLCLocation;
 
             label8.Text = LocRm.GetString("MjpegReceiveTimeout");
             label47.Text = LocRm.GetString("StartupMode");
@@ -585,9 +586,7 @@ namespace iSpyApplication
             tabPage4.Text = LocRm.GetString("Timeouts");
             tabPage6.Text = LocRm.GetString("options");
             tabPage7.Text = LocRm.GetString("IPAccess");
-            linkLabel1.Text = LocRm.GetString("GetLatestList");
             Text = LocRm.GetString("settings");
-            linkLabel2.Text = LocRm.GetString("HelpTranslateISpy");
             chkAlertWindows.Text = LocRm.GetString("CreateAlertWindow");
             chkOverlay.Text = LocRm.GetString("ShowOverlayControls");
             lblPriority.Text = LocRm.GetString("Priority");
@@ -681,7 +680,7 @@ namespace iSpyApplication
             chkEnableLogging.Text = LocRm.GetString("Enable");
             numKeepLogs.Text = LocRm.GetString("KeepLogsForDays");
             numMaxLogSize.Text = LocRm.GetString("MaxFileSizeKB");
-            llblHelp.Visible = linkLabel1.Visible = linkLabel2.Visible = Helper.HasFeature(Enums.Features.View_Ispy_Links);
+            llblHelp.Visible = Helper.HasFeature(Enums.Features.View_Ispy_Links);
         }
 
 
@@ -824,18 +823,6 @@ namespace iSpyApplication
 
         private void LinkLabel1LinkClicked1(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var d = new downloader
-            {
-                Url = MainForm.ContentSource + "/getcontent.aspx?name=translations3&encoding=utf-8",
-                SaveLocation = Program.AppDataPath + @"XML\Translations.xml"
-            };
-            d.ShowDialog(this);
-            if (d.DialogResult == DialogResult.OK)
-            {
-                LocRm.Reset();
-                UISync.Execute(ReloadLanguages);
-            }
-            d.Dispose();
         }
 
         private void ReloadLanguages()
@@ -870,10 +857,6 @@ namespace iSpyApplication
             }
         }
 
-        private void LinkLabel2LinkClicked1(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            MainForm.OpenUrl( MainForm.Website+"/yaf/forum.aspx?g=posts&m=678&#post678#post678");
-        }
 
         #region Nested type: ListItem
 
@@ -1323,6 +1306,22 @@ namespace iSpyApplication
         private void ddlStartupMode_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void label69_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            folderBrowserDialog1.SelectedPath = MainForm.Conf.VLCLocation;
+            var dr = folderBrowserDialog1.ShowDialog(this);
+            if (dr == DialogResult.OK)
+            {
+                MainForm.Conf.VLCLocation = folderBrowserDialog1.SelectedPath;
+                label69.Text = MainForm.Conf.VLCLocation;
+            }
         }
     }
 }

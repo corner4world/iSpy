@@ -71,6 +71,7 @@
         <xs:element name="Language" type="xs:string" />
         <xs:element name="RecentVLCList" type="xs:string" />
         <xs:element name="VLCURL" type="xs:string" />
+        <xs:element name="VLCLocation" type="xs:string" default=""/>
         <xs:element name="AutoSchedule" type="xs:boolean" />
         <xs:element name="Fullscreen" type="xs:boolean" />
         <xs:element name="ShowStatus" type="xs:boolean" />
@@ -141,6 +142,7 @@
         <xs:element name="DropBoxConfig" type="xs:string" default=""/>
         <xs:element name="OpenGrabs" type="xs:boolean" default="true"/>
         <xs:element name="TextSentences" type="xs:string" default=""/>
+        <xs:element name="PlayPaths" type="xs:string" default=""/>
         <xs:element name="VLCFileCache" type="xs:int" default="3000"/>
         <xs:element name="Referers" type="xs:string" default=""/>
         <xs:element name="EncryptCode" type="xs:string" default=""/>

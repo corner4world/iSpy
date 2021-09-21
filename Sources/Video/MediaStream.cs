@@ -33,6 +33,7 @@ namespace iSpyApplication.Sources.Video
 
         private readonly AVInputFormat* _inputFormat;
         private readonly string _modeRTSP = "udp";
+        private bool _preferTCP = true;
         private readonly string _options = "";
         private readonly objectsCamera _source;
 
@@ -83,6 +84,7 @@ namespace iSpyApplication.Sources.Video
             _userAgent = _source.settings.useragent;
             _headers = _source.settings.headers;
             _modeRTSP = Helper.RTSPMode(_source.settings.rtspmode);
+            _preferTCP = _source.settings.prefer_tcp;
             _useGPU = _source.settings.useGPU;
             _ignoreAudio = _source.settings.ignoreaudio;
         }
@@ -265,9 +267,10 @@ namespace iSpyApplication.Sources.Video
             }
 
             AVDictionary* options = null;
+            string prefix="";
             if (_inputFormat == null)
             {
-                var prefix = vss.ToLower().Substring(0, vss.IndexOf(":", StringComparison.Ordinal));
+                prefix = vss.ToLower().Substring(0, vss.IndexOf(":", StringComparison.Ordinal));
                 ffmpeg.av_dict_set_int(&options, "rw_timeout", _timeoutMicroSeconds, 0);
                 ffmpeg.av_dict_set_int(&options, "tcp_nodelay", 1, 0);
                 switch (prefix)
@@ -290,11 +293,15 @@ namespace iSpyApplication.Sources.Video
                         ffmpeg.av_dict_set_int(&options, "stimeout", _timeoutMicroSeconds, 0);
                         if (!string.IsNullOrEmpty(_userAgent))
                             ffmpeg.av_dict_set(&options, "user_agent", _userAgent, 0);
+
                         if (!string.IsNullOrEmpty(_modeRTSP))
                         {
                             ffmpeg.av_dict_set(&options, "rtsp_transport", _modeRTSP, 0);
+                            ffmpeg.av_dict_set(&options, "overrun_nonfatal", "1", 0);
                         }
-                        ffmpeg.av_dict_set(&options, "rtsp_flags", "prefer_tcp", 0);
+
+                        if (_preferTCP)
+                            ffmpeg.av_dict_set(&options, "rtsp_flags", "prefer_tcp", 0);
                         break;
                     default:
                         ffmpeg.av_dict_set_int(&options, "timeout", _timeoutMicroSeconds, 0);
@@ -309,7 +316,6 @@ namespace iSpyApplication.Sources.Video
                 }
                 ffmpeg.av_dict_set_int(&options, "buffer_size", BUFSIZE, 0);
             }
-            //ffmpeg.av_dict_set_int(&options, "rtbufsize", BUFSIZE, 0);
 
             var lo = _options.Split(Environment.NewLine.ToCharArray());
             foreach (var nv in lo)
@@ -354,7 +360,28 @@ namespace iSpyApplication.Sources.Video
                 var t = _timeoutMicroSeconds;
                 _timeoutMicroSeconds = Math.Max(_timeoutMicroSeconds, 15000000);
 
-                Throw("OPEN_INPUT", ffmpeg.avformat_open_input(&pFormatContext, vss, _inputFormat, &options));
+                try
+                {
+                    Throw("OPEN_INPUT", ffmpeg.avformat_open_input(&pFormatContext, vss, _inputFormat, &options));
+
+                    _source.settings.prefer_tcp = _preferTCP;
+                }
+                catch (Exception ex)
+                {
+                    switch (prefix)
+                    {
+                        case "rtsp":
+                        case "rtmp":
+                            //fix for cameras that are asked for tcp transport and return udp
+                            if (_preferTCP && ex.Message.ToLowerInvariant().Contains("invalid data"))
+                            {
+                                _preferTCP = false;
+                                Logger.LogMessage("Switched off prefer_tcp and retrying..", "open");
+                            }
+                            break;
+                    }
+                    throw ex;
+                }
                 _formatContext = pFormatContext;
 
                 SetupFormat();
@@ -527,7 +554,7 @@ namespace iSpyApplication.Sources.Video
 
             var audioInited = false;
             var videoInited = false;
-            byte[] buffer = null, tbuffer = null;
+            byte[] ourBuffer = null, ffmpegBuffer = null;
             var dstData = new byte_ptrArray4();
             var dstLinesize = new int_array4();
             BufferedWaveProvider waveProvider = null;
@@ -537,10 +564,10 @@ namespace iSpyApplication.Sources.Video
             do
             {
                 ffmpeg.av_init_packet(&packet);
-                if (_audioCodecContext != null && buffer == null)
+                if (_audioCodecContext != null && ourBuffer == null)
                 {
-                    buffer = new byte[_audioCodecContext->sample_rate * 2];
-                    tbuffer = new byte[_audioCodecContext->sample_rate * 2];
+                    ourBuffer = new byte[OutFormat.AverageBytesPerSecond];
+                    ffmpegBuffer = new byte[Math.Max(48000 * 4, _audioCodecContext->sample_rate * 4)];//4 = handle fltp
                 }
 
                 if (Log("AV_READ_FRAME", ffmpeg.av_read_frame(_formatContext, &packet))) break;
@@ -567,9 +594,10 @@ namespace iSpyApplication.Sources.Video
                         var s = 0;
                         fixed (byte** outPtrs = new byte*[32])
                         {
-                            fixed (byte* bPtr = &tbuffer[0])
+                            fixed (byte* bPtr = &ffmpegBuffer[0])
                             {
                                 outPtrs[0] = bPtr;
+                                outPtrs[1] = bPtr;
                                 var af = ffmpeg.av_frame_alloc();
                                 ffmpeg.avcodec_send_packet(_audioCodecContext, &packet);
                                 do
@@ -586,13 +614,16 @@ namespace iSpyApplication.Sources.Video
                                                 //need to do this here as send_packet can change channel layout and throw an exception below
                                                 initSWR();
                                             }
-                                            var dat = af->data[0];
-                                        
-                                            numSamplesOut = ffmpeg.swr_convert(_swrContext,
+                                            fixed (byte** inbufs = new byte*[_audioCodecContext->channels])
+                                            {
+                                                for (uint i = 0; i < _audioCodecContext->channels; i++)
+                                                    inbufs[i] = af->data[i];
+                                                numSamplesOut = ffmpeg.swr_convert(_swrContext,
                                                 outPtrs,
-                                                _audioCodecContext->sample_rate,
-                                                &dat,
+                                                OutFormat.SampleRate,
+                                                inbufs,
                                                 af->nb_samples);
+                                            }
                                         }
                                         catch (Exception ex)
                                         {
@@ -604,7 +635,7 @@ namespace iSpyApplication.Sources.Video
                                         if (numSamplesOut > 0)
                                         {
                                             var l = numSamplesOut * 2 * OutFormat.Channels;
-                                            Buffer.BlockCopy(tbuffer, 0, buffer, s, l);
+                                            Buffer.BlockCopy(ffmpegBuffer, 0, ourBuffer, s, l);
                                             s += l;
                                         }
                                         else
@@ -619,7 +650,7 @@ namespace iSpyApplication.Sources.Video
                                 if (s > 0)
                                 {
                                     var ba = new byte[s];
-                                    Buffer.BlockCopy(buffer, 0, ba, 0, s);
+                                    Buffer.BlockCopy(ourBuffer, 0, ba, 0, s);
 
                                     if (!audioInited)
                                     {

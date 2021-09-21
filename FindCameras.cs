@@ -72,7 +72,7 @@ namespace iSpyApplication
         private void FindCameras_Load(object sender, EventArgs e)
         {
             LastConfig.PromptSave = false;
-            _vlc = VlcHelper.VlcInstalled;
+            _vlc = VlcHelper.VLCAvailable;
             llblDownloadVLC.Text = LocRm.GetString("DownloadVLC");
             llblDownloadVLC.Visible = !_vlc;
             btnBack.Enabled = false;
@@ -660,8 +660,8 @@ namespace iSpyApplication
 
             var d = new downloader
                         {
-                            Url = MainForm.ContentSource + "/getcontent.aspx?name=sources3",
-                            SaveLocation = Program.AppDataPath + @"XML\Sources.xml"
+                            Url = MainForm.ContentSource + "Sources.zip",
+                            UnzipTo = Program.AppDataPath + @"XML\"
                         };
             d.ShowDialog(this);
             if (d.DialogResult==DialogResult.OK)

@@ -326,6 +326,7 @@
   <Camera id="10">
     <Makes>
       <Make Name="ENSIDIO" Model="IP202WN" />
+      <Make Name="Aztech" Model="WIPC409HD-E" />      
     </Makes>
     <CommandURL>/web/cgi-bin/hi3510/</CommandURL>
     <Commands>
@@ -2941,6 +2942,28 @@
       <Command Name="Go Preset 5">action=gopreset&amp;preset=5</Command>
     </ExtendedCommands>
   </Camera>
+  <Camera id="118">
+    <Makes>
+      <Make Name="Pelco" Model="Spectra PSP" />
+    </Makes>
+    <CommandURL>/content/ptz/inc.ptz.php</CommandURL>
+    <Commands>
+      <Center>action=gopreset&amp;preset=30</Center>
+      <Left>action=ptzmove&amp;xaxis=-12000&amp;yaxis=0</Left>
+      <Right>action=ptzmove&amp;xaxis=12000&amp;yaxis=0</Right>
+      <Up>action=ptzmove&amp;xaxis=0&amp;yaxis=3600</Up>
+      <Down>action=ptzmove&amp;xaxis=0&amp;yaxis=-3600</Down>
+      <ZoomIn>action=lenszoom&amp;zoom=2</ZoomIn>
+      <ZoomOut>action=lenszoom&amp;zoom=1</ZoomOut>
+    </Commands>
+    <ExtendedCommands>
+      <Command Name="Go Preset 1">action=gopreset&amp;preset=1</Command>
+      <Command Name="Go Preset 2">action=gopreset&amp;preset=2</Command>
+      <Command Name="Go Preset 3">action=gopreset&amp;preset=3</Command>
+      <Command Name="Go Preset 4">action=gopreset&amp;preset=4</Command>
+      <Command Name="Go Preset 5">action=gopreset&amp;preset=5</Command>
+    </ExtendedCommands>
+  </Camera>
   <Camera id="119">
     <Makes>
       <Make Name="Piczel" Model="3500/3505" />
@@ -4516,6 +4539,7 @@
     <Makes>
       <Make Name="IPS" Model="IPS-EYE01W" />
       <Make Name="Digitus" Model="DN-16036" />
+      <Make Name="Wanscam" Model="K3D" />
     </Makes>
     <CommandURL>/cgi-bin/cmd.cgi</CommandURL>
     <Method>POST</Method>
@@ -5340,6 +5364,7 @@ copy or delete as many lines as you need.-->
   <Camera id="199">
     <Makes>
       <Make Name="Dahua" Model="SD59230S" />
+      <Make Name="Lorex" Model="LNZ32P4B" />
     </Makes>
     <CommandURL>/cgi-bin/</CommandURL>
     <Commands>
@@ -5351,7 +5376,7 @@ copy or delete as many lines as you need.-->
       <Down>ptz.cgi?action=start&amp;channel=0&amp;code=Down&amp;arg1=0&amp;arg2=1&amp;arg3=0</Down>
       <LeftDown>ptz.cgi?action=start&amp;channel=0&amp;code=LeftDown&amp;arg1=0&amp;arg2=1&amp;arg3=0</LeftDown>
       <RightDown>ptz.cgi?action=start&amp;channel=0&amp;code=RightDown&amp;arg1=0&amp;arg2=1&amp;arg3=0</RightDown>
-      <Stop>ptz.cgi?action=stop&amp;channel=0&amp;code=Right&amp;arg1=0&amp;arg2=1&amp;arg3=0</Stop>
+      <Stop>ptz.cgi?action=stop&amp;channel=0&amp;code=ZoomWide&amp;arg1=0&amp;arg2=1&amp;arg3=0</Stop>
       <ZoomIn>ptz.cgi?action=start&amp;channel=0&amp;code=ZoomTele&amp;arg1=0&amp;arg2=1&amp;arg3=0</ZoomIn>
       <ZoomOut>ptz.cgi?action=start&amp;channel=0&amp;code=ZoomWide&amp;arg1=0&amp;arg2=1&amp;arg3=0</ZoomOut>
     </Commands>
@@ -5359,6 +5384,11 @@ copy or delete as many lines as you need.-->
       <Command Name="action=Preset 1">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=1&amp;arg3=0</Command>
       <Command Name="action=Preset 2">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=2&amp;arg3=0</Command>
       <Command Name="action=Preset 3">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=3&amp;arg3=0</Command>
+      <Command Name="action=Preset 4">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=4&amp;arg3=0</Command>
+      <Command Name="action=Preset 5">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=5&amp;arg3=0</Command>
+      <Command Name="action=Preset 6">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=6&amp;arg3=0</Command>
+      <Command Name="action=DigZoom Y">configManager.cgi?action=setConfig&amp;VideoInZoom[0][0].DigitalZoom=true</Command>
+      <Command Name="action=DigZoom N">configManager.cgi?action=setConfig&amp;VideoInZoom[0][0].DigitalZoom=false</Command>
     </ExtendedCommands>
   </Camera>
   <Camera id="200">
@@ -6643,21 +6673,26 @@ in the camera's web interface-->
     <CommandURL>/cgi-bin/</CommandURL>
     <Commands>
       <Left>ptz.cgi?action=start&amp;channel=0&amp;code=Left&amp;arg1=0&amp;arg2=1&amp;arg3=0</Left>
+      <LeftUp>ptz.cgi?action=start&amp;channel=0&amp;code=LeftUp&amp;arg1=0&amp;arg2=1&amp;arg3=0</LeftUp>
       <Right>ptz.cgi?action=start&amp;channel=0&amp;code=Right&amp;arg1=0&amp;arg2=1&amp;arg3=0</Right>
-      <Stop>ptz.cgi?action=stop&amp;channel=0&amp;code=Right&amp;arg1=0&amp;arg2=1&amp;arg3=0</Stop>
+      <RightUp>ptz.cgi?action=start&amp;channel=0&amp;code=RightUp&amp;arg1=0&amp;arg2=1&amp;arg3=0</RightUp>
       <Up>ptz.cgi?action=start&amp;channel=0&amp;code=Up&amp;arg1=0&amp;arg2=1&amp;arg3=0</Up>
       <Down>ptz.cgi?action=start&amp;channel=0&amp;code=Down&amp;arg1=0&amp;arg2=1&amp;arg3=0</Down>
-      <ZoomOut>ptz.cgi?action=start&amp;channel=0&amp;code=ZoomWide&amp;arg1=0&amp;arg2=1&amp;arg3=0</ZoomOut>
-      <ZoomIn>ptz.cgi?action=start&amp;channel=0&amp;code=ZoomTele&amp;arg1=0&amp;arg2=1&amp;arg3=0</ZoomIn>
       <LeftDown>ptz.cgi?action=start&amp;channel=0&amp;code=LeftDown&amp;arg1=0&amp;arg2=1&amp;arg3=0</LeftDown>
       <RightDown>ptz.cgi?action=start&amp;channel=0&amp;code=RightDown&amp;arg1=0&amp;arg2=1&amp;arg3=0</RightDown>
-      <LeftUp>ptz.cgi?action=start&amp;channel=0&amp;code=LeftUp&amp;arg1=0&amp;arg2=1&amp;arg3=0</LeftUp>
-      <RightUp>ptz.cgi?action=start&amp;channel=0&amp;code=RightUp&amp;arg1=0&amp;arg2=1&amp;arg3=0</RightUp>
+      <Stop>ptz.cgi?action=stop&amp;channel=0&amp;code=ZoomWide&amp;arg1=0&amp;arg2=1&amp;arg3=0</Stop>
+      <ZoomIn>ptz.cgi?action=start&amp;channel=0&amp;code=ZoomTele&amp;arg1=0&amp;arg2=1&amp;arg3=0</ZoomIn>
+      <ZoomOut>ptz.cgi?action=start&amp;channel=0&amp;code=ZoomWide&amp;arg1=0&amp;arg2=1&amp;arg3=0</ZoomOut>
     </Commands>
     <ExtendedCommands>
       <Command Name="action=Preset 1">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=1&amp;arg3=0</Command>
       <Command Name="action=Preset 2">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=2&amp;arg3=0</Command>
       <Command Name="action=Preset 3">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=3&amp;arg3=0</Command>
+      <Command Name="action=Preset 4">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=4&amp;arg3=0</Command>
+      <Command Name="action=Preset 5">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=5&amp;arg3=0</Command>
+      <Command Name="action=Preset 6">ptz.cgi?action=start&amp;channel=0&amp;code=GotoPreset&amp;arg1=0&amp;arg2=6&amp;arg3=0</Command>
+      <Command Name="action=DigZoom Y">configManager.cgi?action=setConfig&amp;VideoInZoom[0][0].DigitalZoom=true</Command>
+      <Command Name="action=DigZoom N">configManager.cgi?action=setConfig&amp;VideoInZoom[0][0].DigitalZoom=false</Command>
     </ExtendedCommands>
   </Camera>
   <Camera id="234">
@@ -7642,6 +7677,240 @@ in the camera's web interface-->
     <ExtendedCommands>
       <Command Name="Go to Preset 1">/ISAPI/PTZCtrl/channels/1/presets/1/goto?</Command>
       <Command Name="Go to Preset 2">/ISAPI/PTZCtrl/channels/1/presets/2/goto?</Command>
+    </ExtendedCommands>
+  </Camera>
+  <Camera id="258">
+    <Makes>
+      <Make Name="Escam" Model="G02" />
+      <Make Name="Floureon" Model="SD17W" />
+      <Make Name="Floureon" Model="SD26W" />
+    </Makes>
+    <CommandURL>
+    </CommandURL>
+    <Commands>
+      <Center>/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-number=0</Center>
+      <Left>/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&amp;-act=left</Left>
+      <Right>/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&amp;-act=right</Right>
+      <Up>/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&amp;-act=up</Up>
+      <Down>/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&amp;-act=down</Down>
+      <Stop>/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&amp;-act=stop</Stop>
+      <ZoomIn/>
+      <ZoomOut/>
+    </Commands>
+    <ExtendedCommands>
+      <Command Name="Go Preset 1">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=0</Command>
+      <Command Name="Go Preset 2">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=1</Command>
+      <Command Name="Go Preset 3">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=2</Command>
+      <Command Name="Go Preset 4">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=3</Command>
+      <Command Name="Go Preset 5">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=4</Command>
+      <Command Name="Go Preset 6">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=5</Command>
+      <Command Name="Go Preset 7">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=6</Command>
+      <Command Name="Go Preset 8">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=7</Command>
+      <Command Name="Go Preset 9">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=8</Command>
+      <Command Name="Go Preset 10">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=9</Command>
+      <Command Name="Go Preset 11">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=10</Command>
+      <Command Name="Go Preset 12">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=11</Command>
+      <Command Name="Go Preset 13">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=12</Command>
+      <Command Name="Go Preset 14">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=13</Command>
+      <Command Name="Go Preset 15">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-status=1&amp;-number=14</Command>
+      <Command Name="Set Preset 1">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=0</Command>
+      <Command Name="Set Preset 2">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=1</Command>
+      <Command Name="Set Preset 3">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=2</Command>
+      <Command Name="Set Preset 4">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=3</Command>
+      <Command Name="Set Preset 5">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=4</Command>
+      <Command Name="Set Preset 6">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=5</Command>
+      <Command Name="Set Preset 7">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=6</Command>
+      <Command Name="Set Preset 8">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=7</Command>
+      <Command Name="Set Preset 9">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=8</Command>
+      <Command Name="Set Preset 10">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=9</Command>
+      <Command Name="Set Preset 11">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=10</Command>
+      <Command Name="Set Preset 12">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=11</Command>
+      <Command Name="Set Preset 13">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=12</Command>
+      <Command Name="Set Preset 14">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=13</Command>
+      <Command Name="Set Preset 15">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=14</Command>
+    </ExtendedCommands>
+  </Camera>
+  <Camera id="259" AppendAuth="user=[USERNAME]&amp;pwd=[PASSWORD]">
+    <Makes>
+      <Make Name="Dericam" Model="Bx Series" />
+      <Make Name="Dericam" Model="BxE Series" />
+      <Make Name="Dericam" Model="Px Series" />
+      <Make Name="Dericam" Model="Sx Series" />
+    </Makes>
+    <CommandURL>/cgi-bin/hi3510/param.cgi</CommandURL>
+    <Commands>
+      <Center></Center>
+      <Left>cmd=ptzctrl&amp;-step=1&amp;-act=left&amp;-speed=25</Left>
+      <Right>cmd=ptzctrl&amp;-step=1&amp;-act=right&amp;-speed=25</Right>
+      <Up>cmd=ptzctrl&amp;-step=1&amp;-act=up&amp;-speed=25</Up>
+      <Down>cmd=ptzctrl&amp;-step=1&amp;-act=down&amp;-speed=25</Down>
+      <Stop>cmd=ptzctrl&amp;-step=1&amp;-act=stop&amp;-speed=25</Stop>
+      <LeftUp>cmd=ptzctrl&amp;-step=1&amp;-act=upleft&amp;-speed=25</LeftUp>
+      <RightUp>cmd=ptzctrl&amp;-step=1&amp;-act=upright&amp;-speed=25</RightUp>
+      <LeftDown>cmd=ptzctrl&amp;-step=1&amp;-act=downleft&amp;-speed=25</LeftDown>
+      <RightDown>cmd=ptzctrl&amp;-step=1&amp;-act=downright&amp;-speed=25</RightDown>
+      <ZoomIn>cmd=ptzctrl&amp;-step=1&amp;-act=zoomin&amp;-speed=25</ZoomIn>
+      <ZoomOut>cmd=ptzctrl&amp;-step=1&amp;-act=zoomout&amp;-speed=25</ZoomOut>
+    </Commands>
+    <ExtendedCommands>
+      <Command Name="Goto Preset 1">cmd=preset&amp;-act=goto&amp;-number=1</Command>
+      <Command Name="Goto Preset 2">cmd=preset&amp;-act=goto&amp;-number=2</Command>
+      <Command Name="Goto Preset 3">cmd=preset&amp;-act=goto&amp;-number=3</Command>
+      <Command Name="Goto Preset 4">cmd=preset&amp;-act=goto&amp;-number=4</Command>
+      <Command Name="Goto Preset 5">cmd=preset&amp;-act=goto&amp;-number=5</Command>
+      <Command Name="Goto Preset 6">cmd=preset&amp;-act=goto&amp;-number=6</Command>
+      <Command Name="Goto Preset 7">cmd=preset&amp;-act=goto&amp;-number=7</Command>
+      <Command Name="Goto Preset 8">cmd=preset&amp;-act=goto&amp;-number=8</Command>
+      <Command Name="Set Preset 1">cmd=preset&amp;-act=set&amp;-status=1&amp;-number=1</Command>
+      <Command Name="Set Preset 2">cmd=preset&amp;-act=set&amp;-status=1&amp;-number=2</Command>
+      <Command Name="Set Preset 3">cmd=preset&amp;-act=set&amp;-status=1&amp;-number=3</Command>
+      <Command Name="Set Preset 4">cmd=preset&amp;-act=set&amp;-status=1&amp;-number=4</Command>
+      <Command Name="Set Preset 5">cmd=preset&amp;-act=set&amp;-status=1&amp;-number=5</Command>
+      <Command Name="Set Preset 6">cmd=preset&amp;-act=set&amp;-status=1&amp;-number=6</Command>
+      <Command Name="Set Preset 7">cmd=preset&amp;-act=set&amp;-status=1&amp;-number=7</Command>
+      <Command Name="Set Preset 8">cmd=preset&amp;-act=set&amp;-status=1&amp;-number=8</Command>
+    </ExtendedCommands>
+  </Camera>
+  <Camera id="260">
+    <Makes>
+      <Make Name="JideTech" Model="POE PTZ 2MP Dome" />
+    </Makes>
+    <CommandURL>/form/setPTZCfg?ZFSpeed=0&amp;PTSpeed=0&amp;panSpeed=4&amp;tiltSpeed=4&amp;focusSpeed=0&amp;zoomSpeed=0</CommandURL>
+    <Commands>
+      <Stop>command=0</Stop>
+      <Center>command=0</Center>
+      <Left>command=3</Left>
+      <LeftUp>command=6</LeftUp>
+      <Right>command=4</Right>
+      <RightUp>command=7</RightUp>
+      <Up>command=1</Up>
+      <Down>command=2</Down>
+      <LeftDown>command=5</LeftDown>
+      <RightDown>command=8</RightDown>
+      <ZoomIn>command=13</ZoomIn>
+      <ZoomOut>command=14</ZoomOut>
+    </Commands>
+    <ExtendedCommands>
+      <Command Name="Go Preset 1">/form/presetSet?flag=4&amp;presetNum=0&amp;existFlag=1&amp;language=cn</Command>
+      <Command Name="Go Preset 2">/form/presetSet?flag=4&amp;presetNum=1&amp;existFlag=1&amp;language=cn</Command>
+      <Command Name="Go Preset 3">/form/presetSet?flag=4&amp;presetNum=2&amp;existFlag=1&amp;language=cn</Command>
+      <Command Name="Go Preset 4">/form/presetSet?flag=4&amp;presetNum=3&amp;existFlag=1&amp;language=cn</Command>
+      <Command Name="Set Preset 1">/form/presetSet?flag=3&amp;presetNum=0&amp;existFlag=1&amp;language=cn</Command>
+      <Command Name="Set Preset 2">/form/presetSet?flag=3&amp;presetNum=1&amp;existFlag=1&amp;language=cn</Command>
+      <Command Name="Set Preset 3">/form/presetSet?flag=3&amp;presetNum=2&amp;existFlag=1&amp;language=cn</Command>
+      <Command Name="Set Preset 4">/form/presetSet?flag=3&amp;presetNum=3&amp;existFlag=1&amp;language=cn</Command>
+    </ExtendedCommands>
+  </Camera>
+  <Camera id="261">
+    <Makes>
+      <Make Name="EarthCam" />
+    </Makes>
+    <CommandURL>/cgi/ptz.cgi?addr=1&amp;move=cont</CommandURL>
+    <Commands>
+      <Center>&amp;dir=center&amp;spd=2100&amp;td=300</Center>
+      <Left>&amp;dir=left&amp;spd=2100&amp;td=300</Left>
+      <LeftUp>&amp;dir=upleft&amp;spd=2100&amp;td=300</LeftUp>
+      <Right>&amp;dir=right&amp;spd=2100&amp;td=300</Right>
+      <RightUp>&amp;dir=upright&amp;spd=2100&amp;td=300</RightUp>
+      <Up>&amp;dir=up&amp;spd=2100&amp;td=300</Up>
+      <Down>&amp;dir=down&amp;spd=2100&amp;td=300</Down>
+      <LeftDown>&amp;dir=downleft&amp;spd=2100&amp;td=300</LeftDown>
+      <RightDown>&amp;dir=downright&amp;spd=2100&amp;td=300</RightDown>
+      <Stop>&amp;dir=stop&amp;spd=2100&amp;td=300</Stop>
+      <ZoomIn>
+      </ZoomIn>
+      <ZoomOut>
+      </ZoomOut>
+    </Commands>
+    <ExtendedCommands>
+      <Command Name="Zoom-In">/axis-cgi/com/ptz.cgi?camera=1&amp;rzoom=800</Command>
+      <Command Name="Zoom-Out">/axis-cgi/com/ptz.cgi?camera=1&amp;rzoom=-800</Command>
+    </ExtendedCommands>
+  </Camera>
+  <Camera id="262">
+    <Makes>
+      <Make Name="Hisee" Model="POE PTZ 2MP Dome" />
+      <Make Name="Hisee" Model="Other" />
+    </Makes>
+    <CommandURL>/form/setPTZCfg?ZFSpeed=0&amp;PTSpeed=0&amp;panSpeed=8&amp;tiltSpeed=8&amp;focusSpeed=0&amp;zoomSpeed=0</CommandURL>
+    <Commands>
+      <Stop>command=0</Stop>
+      <Center>command=0</Center>
+      <Left>command=3</Left>
+      <LeftUp>command=6</LeftUp>
+      <Right>command=4</Right>
+      <RightUp>command=7</RightUp>
+      <Up>command=1</Up>
+      <Down>command=2</Down>
+      <LeftDown>command=5</LeftDown>
+      <RightDown>command=8</RightDown>
+      <ZoomIn>command=13</ZoomIn>
+      <ZoomOut>command=14</ZoomOut>
+    </Commands>
+    <ExtendedCommands>
+      <Command Name="Go Preset 1">/form/presetSet?flag=4&amp;presetNum=0&amp;existFlag=1&amp;</Command>
+      <Command Name="Go Preset 2">/form/presetSet?flag=4&amp;presetNum=1&amp;existFlag=1&amp;</Command>
+      <Command Name="Go Preset 3">/form/presetSet?flag=4&amp;presetNum=2&amp;existFlag=1&amp;</Command>
+      <Command Name="Go Preset 4">/form/presetSet?flag=4&amp;presetNum=3&amp;existFlag=1&amp;</Command>
+      <Command Name="Go Preset 5">/form/presetSet?flag=4&amp;presetNum=4&amp;existFlag=1&amp;</Command>
+      <Command Name="Go Preset 6">/form/presetSet?flag=4&amp;presetNum=5&amp;existFlag=1&amp;</Command>
+      <Command Name="Go Preset 7">/form/presetSet?flag=4&amp;presetNum=6&amp;existFlag=1&amp;</Command>
+      <Command Name="Go Preset 8">/form/presetSet?flag=4&amp;presetNum=7&amp;existFlag=1&amp;</Command>
+      <Command Name="Go Preset 9">/form/presetSet?flag=4&amp;presetNum=8&amp;existFlag=1&amp;</Command>
+      <Command Name="Go Preset 10">/form/presetSet?flag=4&amp;presetNum=9&amp;existFlag=1&amp;</Command>
+      <Command Name="Go Preset 11">/form/presetSet?flag=4&amp;presetNum=10&amp;existFlag=1&amp;</Command>
+      <Command Name="Go Preset 12">/form/presetSet?flag=4&amp;presetNum=011amp;existFlag=1&amp;</Command>
+      <Command Name="Set Preset 1">/form/presetSet?flag=3&amp;presetNum=0&amp;presetName=&amp;existFlag=0&amp;</Command>
+      <Command Name="Set Preset 2">/form/presetSet?flag=3&amp;presetNum=1&amp;presetName=&amp;existFlag=0&amp;</Command>
+      <Command Name="Set Preset 3">/form/presetSet?flag=3&amp;presetNum=2&amp;presetName=&amp;existFlag=0&amp;</Command>
+      <Command Name="Set Preset 4">/form/presetSet?flag=3&amp;presetNum=3&amp;presetName=&amp;existFlag=0&amp;</Command>
+      <Command Name="Set Preset 5">/form/presetSet?flag=3&amp;presetNum=4&amp;presetName=&amp;existFlag=0&amp;</Command>
+      <Command Name="Set Preset 6">/form/presetSet?flag=3&amp;presetNum=5&amp;presetName=&amp;existFlag=0&amp;</Command>
+      <Command Name="Set Preset 7">/form/presetSet?flag=3&amp;presetNum=6&amp;presetName=&amp;existFlag=0&amp;</Command>
+      <Command Name="Set Preset 8">/form/presetSet?flag=3&amp;presetNum=7&amp;presetName=&amp;existFlag=0&amp;</Command>
+      <Command Name="Set Preset 9">/form/presetSet?flag=3&amp;presetNum=8&amp;presetName=&amp;existFlag=0&amp;</Command>
+      <Command Name="Set Preset 10">/form/presetSet?flag=3&amp;presetNum=9&amp;presetName=&amp;existFlag=0&amp;</Command>
+      <Command Name="Set Preset 11">/form/presetSet?flag=3&amp;presetNum=10&amp;presetName=&amp;existFlag=0&amp;</Command>
+      <Command Name="Set Preset 12">/form/presetSet?flag=3&amp;presetNum=11&amp;presetName=&amp;existFlag=0&amp;</Command>
+    </ExtendedCommands>
+  </Camera>
+  <Camera id="263">
+    <Makes>
+      <Make Name="EasyN" Model="109 Dome" />
+      <Make Name="EasyN" Model="Other" />
+    </Makes>
+    <CommandURL>/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0</CommandURL>
+    <Commands>
+      <Stop>-act=stop</Stop>
+      <Center>command=0</Center>
+      <Left>-act=left&amp;-speed=45</Left>
+      <LeftUp>command=6</LeftUp>
+      <Right>-act=right&amp;-speed=45</Right>
+      <RightUp>command=7</RightUp>
+      <Up>-act=up&amp;-speed=45</Up>
+      <Down>-act=down&amp;-speed=45</Down>
+      <LeftDown>command=5</LeftDown>
+      <RightDown>command=8</RightDown>
+      <ZoomIn>-act=zoomin&amp;-speed=45</ZoomIn>
+      <ZoomOut>-act=zoomout&amp;-speed=45</ZoomOut>
+    </Commands>
+    <ExtendedCommands>
+      <Command Name="Go Preset 1">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-number=0</Command>
+      <Command Name="Go Preset 2">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-number=1</Command>
+      <Command Name="Go Preset 3">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-number=2</Command>
+      <Command Name="Go Preset 4">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-number=3</Command>
+      <Command Name="Go Preset 5">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-number=4</Command>
+      <Command Name="Go Preset 6">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-number=5</Command>
+      <Command Name="Go Preset 7">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-number=6</Command>
+      <Command Name="Go Preset 8">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=goto&amp;-number=7</Command>
+      <Command Name="Set Preset 1">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=0</Command>
+      <Command Name="Set Preset 2">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=1</Command>
+      <Command Name="Set Preset 3">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=2</Command>
+      <Command Name="Set Preset 4">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=3</Command>
+      <Command Name="Set Preset 5">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=4</Command>
+      <Command Name="Set Preset 6">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=5</Command>
+      <Command Name="Set Preset 7">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=6</Command>
+      <Command Name="Set Preset 8">/web/cgi-bin/hi3510/param.cgi?cmd=preset&amp;-act=set&amp;-status=1&amp;-number=7</Command>
     </ExtendedCommands>
   </Camera>
 </PTZSettings2>

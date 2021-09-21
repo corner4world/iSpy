@@ -467,8 +467,11 @@ namespace iSpyApplication.Controls
                     if (value && AudioSource!=null)
                     {
                         AudioSource.Listening = true; //(creates the waveoutprovider referenced below)
-                        WaveOut.Init(AudioSource.WaveOutProvider);
-                        WaveOut.Play();
+                        if (AudioSource.WaveOutProvider != null)
+                        {
+                            WaveOut.Init(AudioSource.WaveOutProvider);
+                            WaveOut.Play();
+                        }
                         
                     }
                     else
@@ -1308,7 +1311,6 @@ namespace iSpyApplication.Controls
             if (Micobject.settings.typeindex == 2)
             {
                 var vlc = AudioSource as VlcStream;
-                vlc?.CheckTimestamp();
             }
         }
 
@@ -1603,7 +1605,7 @@ namespace iSpyApplication.Controls
                     {
                         #region mp3writer
 
-                        DateTime date = DateTime.Now;
+                        DateTime date = DateTime.Now.AddSeconds(0- Micobject.settings.buffer);
 
                         string filename =
                             $"{date.Year}-{Helper.ZeroPad(date.Month)}-{Helper.ZeroPad(date.Day)}_{Helper.ZeroPad(date.Hour)}-{Helper.ZeroPad(date.Minute)}-{Helper.ZeroPad(date.Second)}";
@@ -1972,17 +1974,7 @@ namespace iSpyApplication.Controls
                                       {RecordingFormat = new WaveFormat(8000, 16, 1)};
                         break;
                     case 2: //VLC listener
-                        List<String> inargs = Micobject.settings.vlcargs.Split(Environment.NewLine.ToCharArray(),
-                            StringSplitOptions.RemoveEmptyEntries).
-                            ToList();
-                        //switch off video output
-                        inargs.Add(":sout=#transcode{vcodec=none}:Display");
-
-                        AudioSource = new VlcStream(Micobject, inargs.ToArray())
-                                      {
-                                          RecordingFormat = new WaveFormat(sampleRate, bitsPerSample, channels),
-                                          TimeOut = Micobject.settings.timeout
-                                      };
+                        AudioSource = new VlcStream(this);
                         break;
                     case 3: //FFMPEG listener
                         AudioSource = new MediaStream(Micobject);

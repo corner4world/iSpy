@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?if $(var.Platform) = x64 ?>
+<?define ProductName = "iSpy package installer (64 bit)" ?>
+<?define Win64 = "yes" ?>
+<?define UpgradeCode = "646aac21-26ad-49c0-a3d7-84d5d6b90a8c" ?>
+<?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+<?else ?>
+<?define ProductName = "iSpy package installer" ?>
+<?define Win64 = "no" ?>
+<?define UpgradeCode = "d161dc3f-2545-45e7-bb15-41e65095c009" ?>
+<?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+<?endif ?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Bundle Name="iSpy package installer (64 bit)" Version="!(bind.packageVersion.iSpy)" Manufacturer="DeveloperInABox" UpgradeCode="646aac21-26ad-49c0-a3d7-84d5d6b90a8c"
-    HelpUrl="http://www.ispyconnect.com/userguide.aspx"
-    Copyright="Copyright© 2016, DeveloperInABox" IconSourceFile="ispy.ico"
+  <Bundle Name="$(var.ProductName)" Version="!(bind.packageVersion.iSpy)" Manufacturer="DeveloperInABox" UpgradeCode="$(var.UpgradeCode)"
+    HelpUrl="https://www.ispyconnect.com/userguide.aspx"
+    Copyright="Copyright© 2020, DeveloperInABox" IconSourceFile="ispy.ico"
     AboutUrl="http://www.ispyconnect.com/about.aspx" >
-    <Variable Name="InstallFolder" Type="string" Value="[ProgramFiles64Folder]iSpy"/>
+    <Variable Name="InstallFolder" Type="string" Value="[$(var.PlatformProgramFilesFolder)]iSpy"/>
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
       <bal:WixStandardBootstrapperApplication
         LogoFile="ispy.png"
@@ -16,7 +27,7 @@
       <PackageGroupRef Id="NetFx45Web"/>
       <PackageGroupRef Id="WindowsInstaller45"/>
       <RollbackBoundary />
-      <MsiPackage Id="iSpy" SourceFile="$(var.iSpy64Setup.TargetPath)" DisplayInternalUI="no" Compressed="yes" Vital="yes" Visible="yes">
+      <MsiPackage Id="iSpy" SourceFile="$(var.iSpySetup.TargetPath)" DisplayInternalUI="no" Compressed="yes" Vital="yes" Visible="yes">
         <MsiProperty Name="INSTALLFOLDER" Value="[InstallFolder]" />
         <MsiProperty Name='CONFIGFILELOCATION' Value='[WixBundleOriginalSourceFolder]' />
       </MsiPackage>
